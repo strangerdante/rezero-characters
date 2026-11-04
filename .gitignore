@@ -1,0 +1,11 @@
+# AURA - metadatos internos del agente
+.aura/
+
+# Sistema operativo
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Editores
+.vscode/
+.idea/

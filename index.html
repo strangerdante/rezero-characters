@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Re:Zero — Starting Life in Another World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#070912;
+    --bg-soft:#0d1020;
+    --panel:rgba(255,255,255,.045);
+    --line:rgba(255,255,255,.10);
+    --text:#e9ecf5;
+    --muted:#9aa3bd;
+    --violet:#8b6cff;
+    --cyan:#5fd8ff;
+    --rose:#ff6b9d;
+    --gold:#f5c451;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+
+  html{scroll-behavior:smooth}
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    line-height:1.65;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* Fondo decorativo */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:
+      radial-gradient(900px 600px at 15% -5%, rgba(139,108,255,.20), transparent 60%),
+      radial-gradient(800px 550px at 88% 8%, rgba(95,216,255,.14), transparent 60%),
+      radial-gradient(700px 500px at 50% 105%, rgba(255,107,157,.10), transparent 60%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.028) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.028) 1px, transparent 1px);
+    background-size:64px 64px;
+    mask-image:radial-gradient(circle at 50% 30%, #000 0%, transparent 78%);
+    -webkit-mask-image:radial-gradient(circle at 50% 30%, #000 0%, transparent 78%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 24px}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    background:rgba(7,9,18,.72);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:1180px;margin:0 auto;padding:14px 24px;
+    display:flex;align-items:center;justify-content:space-between;gap:20px;
+  }
+  .brand{
+    font-family:'Cinzel',serif;font-weight:900;letter-spacing:.14em;
+    font-size:.95rem;text-transform:uppercase;
+    background:linear-gradient(100deg,var(--cyan),var(--violet) 55%,var(--rose));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    white-space:nowrap;
+  }
+  .nav-links{display:flex;gap:26px;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase}
+  .nav-links a{color:var(--muted);text-decoration:none;transition:color .25s}
+  .nav-links a:hover{color:var(--text)}
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    position:relative;z-index:1;
+    padding:96px 0 70px;
+    text-align:center;
+  }
+  .kicker{
+    display:inline-flex;align-items:center;gap:9px;
+    font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--cyan);
+    border:1px solid rgba(95,216,255,.32);
+    background:rgba(95,216,255,.07);
+    padding:7px 16px;border-radius:999px;margin-bottom:26px;
+  }
+  .kicker::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 10px var(--cyan)}
+
+  h1{
+    font-family:'Cinzel',serif;
+    font-size:clamp(2.6rem,7vw,5.2rem);
+    font-weight:900;line-height:1.02;letter-spacing:.01em;
+    margin-bottom:8px;
+  }
+  h1 .grad{
+    background:linear-gradient(100deg,#5fd8ff,#8b6cff 45%,#ff6b9d);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    display:block;
+  }
+  .subtitle{
+    font-family:'Cinzel',serif;
+    font-size:clamp(.85rem,2vw,1.15rem);
+    letter-spacing:.32em;text-transform:uppercase;
+    color:var(--muted);margin-bottom:26px;
+  }
+  .lede{
+    max-width:640px;margin:0 auto 34px;
+    color:#b6bdd4;font-size:1.02rem;font-weight:300;
+  }
+  .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .btn{
+    display:inline-block;padding:13px 30px;border-radius:999px;
+    font-size:.85rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+    text-decoration:none;transition:transform .25s,box-shadow .25s,background .25s;
+  }
+  .btn-primary{
+    background:linear-gradient(100deg,var(--violet),var(--rose));
+    color:#fff;box-shadow:0 10px 34px rgba(139,108,255,.34);
+  }
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 16px 42px rgba(139,108,255,.5)}
+  .btn-ghost{
+    border:1px solid var(--line);color:var(--text);background:rgba(255,255,255,.03);
+  }
+  .btn-ghost:hover{transform:translateY(-3px);background:rgba(255,255,255,.08)}
+
+  /* ---------- SECTION ---------- */
+  section{position:relative;z-index:1;padding:64px 0}
+  .sec-head{margin-bottom:42px;text-align:center}
+  .sec-tag{
+    font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--violet);margin-bottom:12px;font-weight:600;
+  }
+  .sec-head h2{
+    font-family:'Cinzel',serif;font-size:clamp(1.7rem,4vw,2.6rem);
+    font-weight:700;letter-spacing:.02em;
+  }
+  .sec-head p{color:var(--muted);max-width:560px;margin:12px auto 0;font-weight:300;font-size:.95rem}
+
+  /* ---------- CHARACTER GRID ---------- */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(215px,1fr));
+    gap:22px;
+  }
+
+  .card{
+    position:relative;
+    border:1px solid var(--line);
+    border-radius:20px;
+    background:linear-gradient(170deg,rgba(255,255,255,.06),rgba(255,255,255,.015));
+    overflow:hidden;
+    transition:transform .35s cubic-bezier(.2,.8,.3,1),border-color .35s,box-shadow .35s;
+    isolation:isolate;
+  }
+  .card::before{
+    content:"";position:absolute;inset:0;z-index:-1;opacity:0;
+    background:radial-gradient(circle at 50% 0%,var(--glow,rgba(139,108,255,.35)),transparent 70%);
+    transition:opacity .35s;
+  }
+  .card:hover{
+    transform:translateY(-8px);
+    border-color:rgba(255,255,255,.24);
+    box-shadow:0 26px 60px rgba(0,0,0,.55);
+  }
+  .card:hover::before{opacity:1}
+
+  .portrait{
+    position:relative;
+    height:290px;
+    display:flex;align-items:flex-end;justify-content:center;
+    padding:16px 12px 0;
+  }
+  .portrait::after{
+    content:"";position:absolute;left:0;right:0;bottom:0;height:110px;
+    background:linear-gradient(to top,var(--bg-soft) 8%,transparent);
+    pointer-events:none;
+  }
+  .portrait img{
+    max-width:100%;max-height:100%;
+    object-fit:contain;
+    filter:drop-shadow(0 18px 26px rgba(0,0,0,.6));
+    transition:transform .45s cubic-bezier(.2,.8,.3,1);
+  }
+  .card:hover .portrait img{transform:scale(1.06) translateY(-4px)}
+
+  .info{padding:16px 18px 20px;text-align:center;position:relative}
+  .info h3{
+    font-family:'Cinzel',serif;font-size:1.06rem;font-weight:700;
+    letter-spacing:.03em;margin-bottom:4px;
+  }
+  .role{
+    font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--accent,var(--violet));font-weight:600;margin-bottom:10px;
+  }
+  .desc{font-size:.82rem;color:var(--muted);font-weight:300;line-height:1.6}
+
+  /* ---------- LORE / INFO ---------- */
+  .lore-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;
+  }
+  .lore{
+    border:1px solid var(--line);border-radius:18px;padding:26px 24px;
+    background:var(--panel);transition:border-color .3s,transform .3s;
+  }
+  .lore:hover{border-color:rgba(139,108,255,.45);transform:translateY(-4px)}
+  .lore .num{
+    font-family:'Cinzel',serif;font-size:2rem;font-weight:900;
+    background:linear-gradient(100deg,var(--cyan),var(--violet));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    line-height:1;margin-bottom:12px;
+  }
+  .lore h4{font-size:1rem;font-weight:600;margin-bottom:8px;letter-spacing:.02em}
+  .lore p{font-size:.85rem;color:var(--muted);font-weight:300}
+
+  /* ---------- QUOTE ---------- */
+  .quote{
+    text-align:center;padding:70px 20px;
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    background:linear-gradient(180deg,rgba(139,108,255,.07),transparent);
+  }
+  .quote blockquote{
+    font-family:'Cinzel',serif;font-size:clamp(1.15rem,3vw,1.9rem);
+    font-weight:400;font-style:italic;max-width:760px;margin:0 auto 16px;
+    line-height:1.5;color:#dfe4f5;
+  }
+  .quote cite{font-size:.78rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);font-style:normal}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    position:relative;z-index:1;padding:44px 0 54px;text-align:center;
+    color:#6f7897;font-size:.78rem;letter-spacing:.04em;
+  }
+  footer a{color:var(--muted);text-decoration:none;border-bottom:1px dotted rgba(255,255,255,.2)}
+  footer a:hover{color:var(--cyan)}
+  .disclaimer{margin-top:10px;font-size:.72rem;color:#565e78;max-width:620px;margin-left:auto;margin-right:auto}
+
+  /* ---------- ANIMACIÓN ---------- */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.3,1)}
+  .reveal.visible{opacity:1;transform:none}
+
+  @media(max-width:640px){
+    .nav-links{display:none}
+    header.hero{padding:66px 0 46px}
+    .portrait{height:250px}
+    section{padding:48px 0}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <span class="brand">Re:Zero</span>
+    <div class="nav-links">
+      <a href="#personajes">Personajes</a>
+      <a href="#mundo">El Mundo</a>
+      <a href="#frase">Frase</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="kicker">Starting Life in Another World</span>
+    <h1>Re:Zero<span class="grad">kara Hajimeru Isekai Seikatsu</span></h1>
+    <p class="subtitle">El bucle infinito de la muerte y el regreso</p>
+    <p class="lede">
+      Subaru Natsuki es transportado de repente a un mundo de fantasía. Allí descubre un poder
+      aterrador: cada vez que muere, el tiempo regresa. Pero cada regreso tiene un precio,
+      y salvar a quienes ama puede costarle su propia cordura.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#personajes">Conocer el elenco</a>
+      <a class="btn btn-ghost" href="#mundo">Explorar el mundo</a>
+    </div>
+  </div>
+</header>
+
+<section id="personajes">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-tag">Elenco principal</div>
+      <h2>Los Personajes</h2>
+      <p>Los rostros que definen la historia de Re:Zero.</p>
+    </div>
+
+    <div class="grid">
+
+      <article class="card reveal" style="--glow:rgba(95,216,255,.35);--accent:#5fd8ff">
+        <div class="portrait"><img src="img/subaru.webp" alt="Subaru Natsuki" loading="lazy"></div>
+        <div class="info">
+          <h3>Subaru Natsuki</h3>
+          <div class="role">El Protagonista</div>
+          <p class="desc">Un joven de otro mundo que puede volver del pasado al morir. Su voluntad es su única arma.</p>
+        </div>
+      </article>
+
+      <article class="card reveal" style="--glow:rgba(139,108,255,.40);--accent:#a78bfa">
+        <div class="portrait"><img src="img/emilia.webp" alt="Emilia" loading="lazy"></div>
+        <div class="info">
+          <h3>Emilia</h3>
+          <div class="role">Media Elfa</div>
+          <p class="desc">Candidata al trono real. Amable y de corazón puro, carga con el estigma de su raza.</p>
+        </div>
+      </article>
+
+      <article class="card reveal" style="--glow:rgba(95,216,255,.38);--accent:#7dd3fc">
+        <div class="portrait"><img src="img/rem.webp" alt="Rem" loading="lazy"></div>
+        <div class="info">
+          <h3>Rem</h3>
+          <div class="role">Doncella Demonio</div>
+          <p class="desc">La menor de las gemelas Oni. Ferozmente leal, su devoción no conoce límites.</p>
+        </div>
+      </article>
+
+      <article class="card reveal" style="--glow:rgba(255,107,157,.35);--accent:#ff6b9d">
+        <div class="portrait"><img src="img/ram.webp" alt="Ram" loading="lazy"></div>
+        <div class="info">
+          <h3>Ram</h3>
+          <div class="role">Doncella Demonio</div>
+          <p class="desc">La mayor de las gemelas Oni. Sarcástica, orgullosa y protectora de su hermana.</p>
+        </div>
+      </article>
+
+      <article class="card reveal" style="--glow:rgba(245,196,81,.35);--accent:#f5c451">
+        <div class="portrait"><img src="img/beatrice.webp" alt="Beatrice" loading="lazy"></div>
+        <div class="info">
+          <h3>Beatrice</h3>
+          <div class="role">Espíritu de la Biblioteca</div>
+          <p class="desc">Guardián de la biblioteca prohibida. Una niña eterna con siglos de soledad.</p>
+        </div>
+      </article>
+
+      <article class="card reveal" style="--glow:rgba(95,216,255,.32);--accent:#67e8f9">
+        <div class="portrait"><img src="img/puck.webp" alt="Puck" loading="lazy"></div>
+        <div class="info">
+          <h3>Puck</h3>
+          <div class="role">Espíritu del Fuego</div>
+          <p class="desc">Pequeño gato espiritual y guardián de Emilia. Tierno, hasta que la ira lo consume.</p>
+        </div>
+      </article>
+
+      <article class="card reveal" style="--glow:rgba(255,107,157,.32);--accent:#fb7185">
+        <div class="portrait"><img src="img/roswaal.webp" alt="Roswaal L Mathers" loading="lazy"></div>
+        <div class="info">
+          <h3>Roswaal L Mathers</h3>
+          <div class="role">El Mago</div>
+          <p class="desc">Señor de la mansión y mago de inmenso poder. Sus intenciones nunca son simples.</p>
+        </div>
+      </article>
+
+      <article class="card reveal" style="--glow:rgba(255,255,255,.28);--accent:#e2e8f0">
+        <div class="portrait"><img src="img/echidna.webp" alt="Echidna" loading="lazy"></div>
+        <div class="info">
+          <h3>Echidna</h3>
+          <div class="role">Bruja de la Codicia</div>
+          <p class="desc">Una de las Brujas del Pecado. Su curiosidad insaciable lo abarca todo.</p>
+        </div>
+      </article>
+
+      <article class="card reveal" style="--glow:rgba(245,196,81,.34);--accent:#fbbf24">
+        <div class="portrait"><img src="img/reinhard.webp" alt="Reinhard van Astrea" loading="lazy"></div>
+        <div class="info">
+          <h3>Reinhard van Astrea</h3>
+          <div class="role">Caballero de la Espada</div>
+          <p class="desc">El espadachín más fuerte del reino. Un héroe invicto que carga con su propia tragedia.</p>
+        </div>
+      </article>
+
+      <article class="card reveal" style="--glow:rgba(255,107,157,.30);--accent:#fda4af">
+        <div class="portrait"><img src="img/felt.webp" alt="Felt" loading="lazy"></div>
+        <div class="info">
+          <h3>Felt</h3>
+          <div class="role">Ladrona Real</div>
+          <p class="desc">Una ladrona callejera de espíritu indomable, aspirante al trono del reino de Lugunica.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section id="mundo">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-tag">Contexto</div>
+      <h2>El Mundo de Re:Zero</h2>
+      <p>Un reino, una selección real y un poder que siempre cobra su precio.</p>
+    </div>
+
+    <div class="lore-grid">
+      <div class="lore reveal">
+        <div class="num">01</div>
+        <h4>Retorno por Muerte</h4>
+        <p>Al morir, Subaru regresa a un punto de guardado anterior. No puede revelar este poder a nadie sin sufrir consecuencias fatales.</p>
+      </div>
+      <div class="lore reveal">
+        <div class="num">02</div>
+        <h4>Reino de Lugunica</h4>
+        <p>Una nación de fantasía donde humanos, semi-humanos y espíritus conviven bajo la sombra de una selección real.</p>
+      </div>
+      <div class="lore reveal">
+        <div class="num">03</div>
+        <h4>Selección Real</h4>
+        <p>Tras la muerte de la familia real, cinco candidatas compiten por el trono. Emilia es una de ellas.</p>
+      </div>
+      <div class="lore reveal">
+        <div class="num">04</div>
+        <h4>Las Brujas del Pecado</h4>
+        <p>Entidades legendarias que marcaron el destino del mundo. Su legado persigue a Subaru en cada bucle.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="quote" id="frase">
+  <div class="wrap">
+    <blockquote>«No importa cuántas veces muera. Volveré a levantarme, una y otra vez.»</blockquote>
+    <cite>Subaru Natsuki</cite>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p>Re:Zero kara Hajimeru Isekai Seikatsu — Fan page no oficial</p>
+    <p class="disclaimer">
+      Imágenes de personajes obtenidas del Re:Zero Wiki (Fandom) con fines ilustrativos.
+      Re:Zero es propiedad de Tappei Nagatsuki y sus respectivos titulares de derechos.
+    </p>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
